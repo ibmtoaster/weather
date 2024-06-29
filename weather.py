@@ -19,11 +19,15 @@ class weather :
         self.update()
         
     def update(self):
-        response = requests.get(self.url)
-        self.json = response.json()
-        self.current = self.json.get('properties')['periods'][0]
-        print('weather.update:' + self.updateTime())
-        threading.Timer(self.updateInterval, self.update).start()
+        try:
+          response = requests.get(self.url)
+          self.json = response.json()
+          self.current = self.json.get('properties')['periods'][0]
+          print('weather.update:' + self.updateTime())
+        except:
+          print('weather.update exception')
+        finally:
+          threading.Timer(self.updateInterval, self.update).start()
 
     def dump(self):
         print(self.json)
@@ -56,5 +60,6 @@ if __name__ == '__main__':
   print('detailedForecast:', myweather.detailedForecast())
   print('windSpeed:', myweather.windSpeed())
   print('windDirection:', myweather.windDirection())
+  print('threading.active_count():', threading.active_count())
         
 
