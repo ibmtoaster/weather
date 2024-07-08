@@ -81,8 +81,11 @@ def display_weather():
         lcd.write_string(myweather.temperatureUnit())       
         lcd.cursor_pos = (2,0)
         lcd.write_string(myweather.shortForecast())
-        lcd.cursor_pos = (3,0)
-        lcd.write_string(myweather.windSpeed() + ' ' + myweather.windDirection() + '  ')
+        if (len(myweather.shortForecast()) <= 20):
+          lcd.cursor_pos = (3,0)
+        else:
+          lcd.write_string(' ')
+        lcd.write_string(myweather.windSpeed() + ' ' + myweather.windDirection())
         lock.release()
 
 display_funs = [display_ip_cpu, display_weather]
